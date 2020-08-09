@@ -69,7 +69,7 @@ export class ControladorPrincipalController<Entity> {
     }
   }
 
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   @Get()
   async listarTodo() {
     try {

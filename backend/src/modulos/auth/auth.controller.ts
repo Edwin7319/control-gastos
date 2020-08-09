@@ -22,7 +22,7 @@ export class AuthController {
     const existeErrores = errores.length > 0;
     if (!existeErrores) {
       try {
-        return await this._authService.registrarUsuarioSistema(datos);
+        return await this._authService.crear(datos);
       } catch (e) {
         console.error({
           mensaje: 'Error registrando',
@@ -46,13 +46,28 @@ export class AuthController {
   async logearUsuarioEnElSistema(
     @Body() credenciales: SigInDto,
   ) {
-    try {
-      return await this._authService.logearUsuarioEnElSistema(credenciales);
-    } catch (e) {
+    const sigIn = new SigInDto();
+    sigIn.cedula = credenciales.cedula;
+    sigIn.contrasenia = credenciales.contrasenia;
+    const errores = await validate(sigIn);
+    const existeErrores = errores.length > 0;
+    if (!existeErrores) {
+      try {
+        return await this._authService.logearUsuarioEnElSistema(credenciales);
+      } catch (e) {
+        console.error({
+          mensaje: 'Error al logearse el sistema',
+          error: e,
+          datos: credenciales,
+        });
+      }
+    } else {
       console.error({
-        mensaje: 'Error al logearse el sistema',
-        error: e,
-        datos: credenciales,
+        mensaje: 'errores en credenciales',
+        errores,
+      });
+      throw new BadRequestException({
+        mensaje: 'Error en credenciales',
       });
     }
   }

@@ -16,7 +16,7 @@ export class AuthService {
   ) {
   }
 
-  async registrarUsuarioSistema(usuario: UsuarioEntity): Promise<UsuarioEntity> {
+  async crear(usuario: UsuarioEntity): Promise<UsuarioEntity> {
     const existeUsuario = await this._usuarioRepository.findOne({
       where: {
         cedula: usuario.cedula,
@@ -44,7 +44,7 @@ export class AuthService {
     }
   }
 
-  async logearUsuarioEnElSistema(sigIn: SigInDto): Promise<{ token: string}> {
+  async logearUsuarioEnElSistema(sigIn: SigInDto): Promise<{ token: string }> {
     try {
       const usuario = await this._usuarioRepository
         .createQueryBuilder('usuario')
@@ -59,9 +59,9 @@ export class AuthService {
         });
       }
 
-      const isMatch = await compare(sigIn.contrasenia, usuario.contrasenia);
+      const coincideContrasenia = await compare(sigIn.contrasenia, usuario.contrasenia);
 
-      if (!isMatch) {
+      if (!coincideContrasenia) {
         throw new UnauthorizedException({
           mensaje: 'Credenciales no validas',
         });
@@ -75,7 +75,7 @@ export class AuthService {
       };
 
       const token = await this._jwtService.sign(payload);
-      return { token};
+      return { token };
     } catch (e) {
       console.error({
         mensaje: 'Error logeando usuario',
