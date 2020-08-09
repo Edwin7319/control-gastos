@@ -21,11 +21,14 @@ export class CrearUsuarioDto {
   @IsInt()
   estado: 1 | 0 = 1;
 
+  @IsOptional()
+  @IsString()
+  contrasenia: string;
+
   constructor(usuario: UsuarioEntity) {
     this.nombres = usuario.nombres;
     this.apellidos = usuario.apellidos;
     this.cedula = usuario.cedula;
-
+    this.contrasenia = usuario.contrasenia
   }
-
 }

@@ -20,8 +20,10 @@ import { ARREGLO_ENTIDADES } from './constantes/arreglo-entidades';
       synchronize: CONFIGURACION.bdd.synchronize,
       dropSchema: CONFIGURACION.bdd.dropSchema,
       name: CONFIGURACION.bdd.name,
+      charset: CONFIGURACION.bdd.charset,
+      timezone: CONFIGURACION.bdd.timezone,
       entities: [
-        ...ARREGLO_ENTIDADES
+        ...ARREGLO_ENTIDADES,
       ],
     }),
   ],

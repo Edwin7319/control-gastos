@@ -1,5 +1,6 @@
-import { Column, Entity } from 'typeorm/index';
+import { Column, Entity, ManyToOne } from 'typeorm/index';
 import { EntityGenericaEntity } from '../../clases-genericas/clase-generica-entity/entity-generica.entity';
+import { UsuarioEntity } from '../usuario/usuario.entity';
 
 @Entity('sueldo')
 export class SueldoEntity extends EntityGenericaEntity {
@@ -42,4 +43,9 @@ export class SueldoEntity extends EntityGenericaEntity {
   })
   estado: 1 | 0 = 1;
 
+  @ManyToOne(
+    type => UsuarioEntity,
+    usuario => usuario.sueldos,
+  )
+  usuario: number | UsuarioEntity;
 }

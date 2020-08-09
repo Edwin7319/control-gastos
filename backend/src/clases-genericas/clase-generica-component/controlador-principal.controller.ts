@@ -5,10 +5,11 @@ import {
   Delete, Get,
   InternalServerErrorException,
   Param,
-  Post, Put, Query,
+  Post, Put, Query, UseGuards,
 } from '@nestjs/common';
 import { ServicioPrincipalRestService } from './servicio-principal-rest.service';
 import { validate } from 'class-validator';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller()
 export class ControladorPrincipalController<Entity> {
@@ -53,14 +54,12 @@ export class ControladorPrincipalController<Entity> {
     @Param('id') id: number,
     @Body() datos: Entity,
   ) {
-    console.log(datos);
     const datosAActualizar = new this.actualizarDto(datos);
     const errores = await validate(datosAActualizar);
     const existeErrores = errores.length > 0;
     if (!existeErrores) {
       try {
-        const respuesta = await this._repositoryService.actualizar(id, datos);
-        return respuesta;
+        return await this._repositoryService.actualizar(id, datos);
       } catch (e) {
         throw new InternalServerErrorException({ mensaje: 'Error servidor', tipo: 500 });
       }
@@ -70,10 +69,11 @@ export class ControladorPrincipalController<Entity> {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   async listarTodo() {
     try {
-      return  await this._repositoryService.listarTodos();
+      return await this._repositoryService.listarTodos();
     } catch (e) {
       throw new InternalServerErrorException({ mensaje: 'Error servidor', tipo: 500 });
     }
@@ -84,8 +84,7 @@ export class ControladorPrincipalController<Entity> {
     @Param('id') id: number,
   ) {
     try {
-      const respuesta = await this._repositoryService.listarPorId(id);
-      return respuesta;
+      return await this._repositoryService.listarPorId(id);
     } catch (e) {
       throw new InternalServerErrorException({ mensaje: 'No existe resultados', tipo: 500 });
     }

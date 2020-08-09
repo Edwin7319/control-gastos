@@ -1,5 +1,6 @@
-import { Column, Entity } from 'typeorm/index';
+import { Column, Entity, OneToMany } from 'typeorm/index';
 import { EntityGenericaEntity } from '../../clases-genericas/clase-generica-entity/entity-generica.entity';
+import { RolUsuarioEntity } from '../rol-usuario/rol-usuario.entity';
 
 @Entity('rol')
 export class RolEntity extends EntityGenericaEntity {
@@ -26,5 +27,11 @@ export class RolEntity extends EntityGenericaEntity {
     default: 1,
   })
   estado: 1 | 0 = 1;
+
+  @OneToMany(
+    type => RolUsuarioEntity,
+    rolUsuario => rolUsuario.rol,
+  )
+  rolesUsuario: RolUsuarioEntity[];
 
 }
