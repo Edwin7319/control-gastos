@@ -44,7 +44,7 @@ export class AuthService {
     }
   }
 
-  async logearUsuarioEnElSistema(sigIn: SigInDto): Promise<{ token: string, data: any }> {
+  async logearUsuarioEnElSistema(sigIn: SigInDto): Promise<{ token: string}> {
     try {
       const usuario = await this._usuarioRepository
         .createQueryBuilder('usuario')
@@ -75,7 +75,7 @@ export class AuthService {
       };
 
       const token = await this._jwtService.sign(payload);
-      return { token, data: payload };
+      return { token};
     } catch (e) {
       console.error({
         mensaje: 'Error logeando usuario',
