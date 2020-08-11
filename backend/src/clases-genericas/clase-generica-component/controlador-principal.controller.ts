@@ -36,11 +36,7 @@ export class ControladorPrincipalController<Entity> {
     const existeErrores = errores.length > 0;
     if (!existeErrores) {
       try {
-        const respuesta: any = await this._repositoryService.crear(datos);
-        return {
-          data: respuesta,
-          id: respuesta.id,
-        };
+        return await this._repositoryService.crear(datos);
       } catch (e) {
         throw new InternalServerErrorException({ mensaje: 'Error servidor', tipo: e });
       }
@@ -71,10 +67,17 @@ export class ControladorPrincipalController<Entity> {
 
   // @UseGuards(AuthGuard('jwt'))
   @Get()
-  async listarTodo() {
+  async listarTodo(
+    @Query() consulta,
+  ) {
     try {
-      return await this._repositoryService.listarTodos();
+      return await this._repositoryService.listarTodos(consulta.busqueda);
     } catch (e) {
+      console.error({
+        mensaje: 'Error en controlador finAll',
+        data: consulta,
+        error: e,
+      });
       throw new InternalServerErrorException({ mensaje: 'Error servidor', tipo: 500 });
     }
   }

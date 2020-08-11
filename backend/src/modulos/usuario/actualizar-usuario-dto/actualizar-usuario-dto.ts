@@ -21,6 +21,10 @@ export class ActualizarUsuarioDto {
   estado: 1 | 0 = 1;
 
   @IsOptional()
+  @IsInt()
+  esTrabajador: 1 | 0 = 1;
+
+  @IsOptional()
   @IsString()
   contrasenia: string;
 
@@ -30,5 +34,6 @@ export class ActualizarUsuarioDto {
     this.cedula = usuario.cedula;
     this.contrasenia = usuario.contrasenia;
     this.estado = usuario.estado;
+    this.esTrabajador = usuario.esTrabajador;
   }
 }

@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row justify-content-md-center">
+    {{data.usuario ? 'EDITAR' : 'CREAR'}} USUARIO
+  </div>
+</div>
+
+<div mat-dialog-content>
+  <app-formulario-trabajador
+    [usuario]="data.usuario"
+    (datosUsuario)="escucharDatosDeFormulario($event)"
+  ></app-formulario-trabajador>
+</div>
+
+<div class="row justify-content-lg-end" mat-dialog-actions>
+  <div style="padding-right: 1rem">
+    <button
+      class="btn btn-outline-dark"
+      (click)="cancelarModal()">
+      <i class="pi pi-times"></i>
+      CANCELAR
+    </button>
+  </div>
+  <div>
+    <button class="btn btn-success"
+            [disabled]="!usuarioCrearEditar"
+            (click)="enviarDatosModal()">
+      <i class="pi pi-save"></i>
+      CREAR
+    </button>
+  </div>
+</div>

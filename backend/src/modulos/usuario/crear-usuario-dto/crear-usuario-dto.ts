@@ -22,6 +22,10 @@ export class CrearUsuarioDto {
   estado: 1 | 0 = 1;
 
   @IsOptional()
+  @IsInt()
+  esTrabajador: 1 | 0 = 1;
+
+  @IsOptional()
   @IsString()
   contrasenia: string;
 
@@ -29,6 +33,6 @@ export class CrearUsuarioDto {
     this.nombres = usuario.nombres;
     this.apellidos = usuario.apellidos;
     this.cedula = usuario.cedula;
-    this.contrasenia = usuario.contrasenia
+    this.contrasenia = usuario.contrasenia;
   }
 }

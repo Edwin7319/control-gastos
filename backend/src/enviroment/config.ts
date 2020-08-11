@@ -10,7 +10,7 @@ export const CONFIGURACION = {
     database: 'gastos',
     charset: 'utf8mb4',
     timezone: 'local',
-    synchronize: true,
+    synchronize: false,
     dropSchema: false,
   },
   mongoDB: {

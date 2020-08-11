@@ -3,6 +3,7 @@
     "id": 2,
     "nombres": "Eduardo",
     "apellidos": "Torres",
-    "cedula": "1706490339"
+    "cedula": "1706490339",
+    "esTrabajador": 0
   }
 ]

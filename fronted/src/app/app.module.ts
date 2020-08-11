@@ -13,6 +13,8 @@ import {ToasterModule} from 'angular2-toaster';
 import {NzButtonModule, NzIconModule, NzWaveModule} from 'ng-zorro-antd';
 import {RutaNoEncontradaComponent} from './componentes/ruta-no-encontrada/ruta-no-encontrada.component';
 import {UsuarioRestService} from './modulos/usuario/servicios/usuario.rest.service';
+import {LoadingService} from './servicios/loadin.service';
+import {BlockUIModule} from 'primeng';
 
 registerLocaleData(en);
 
@@ -32,9 +34,11 @@ registerLocaleData(en);
     NzWaveModule,
     NzButtonModule,
     NzIconModule,
+    BlockUIModule,
   ],
   providers: [
     UsuarioRestService,
+    LoadingService
   ],
   bootstrap: [AppComponent]
 })

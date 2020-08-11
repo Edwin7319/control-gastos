@@ -1,91 +1,99 @@
-<div class="container-fluid">
-  <div class="row espacio-top-2">
-    <div class="col-lg-7">
-      <app-titulo-pantalla
-        [titulo]="'Gestion de trabajadores'"
-        [descripcion]="'Gestione los salarios, horas de trabajo, entre otros.'"
-        [ejemplo]="'Ej: Hernesto'"
-      ></app-titulo-pantalla>
-    </div>
-  </div>
-</div>
 <div class="container">
+
+  <app-titulo-pantalla
+    [titulo]="'Gestion de trabajadores'"
+    [descripcion]="'Gestione los salarios, horas de trabajo, entre otros.'"
+    [ejemplo]="'Ej: Hernesto'"
+  ></app-titulo-pantalla>
+
   <div class="row espacio-top-4">
+    <div class="col-lg-7">
+      <app-input-busqueda
+        (busqueda)="escucharBusquedaIngresada($event)"
+        [ayuda]="'Realice su busqueda por nombres, apellidos o cedula'"
+      ></app-input-busqueda>
+    </div>
+
+    <div class="col-lg-3"></div>
+    <div class="col-lg-2">
+      <button class="btn btn-sm btn-block btn-info"
+              (click)="abrirModalCrear()"
+      >
+        NUEVO
+      </button>
+    </div>
+
+  </div>
+
+  <div class="row espacio-top-3">
     <div class="col-lg-12">
       <div class="col-sm-12">
-        <div class="mat-elevation-z8">
-          <table
-            mat-table
-            [dataSource]="data"
-            matSort
-          >
-            <ng-container matColumnDef="Nombres">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                Nombres
+        <p-table
+          [value]="data"
+          [columns]="columnas"
+          [responsive]="true"
+          [lazy]="true"
+          (onLazyLoad)="cargarMasDatos($event)"
+          [paginator]="true"
+          [rows]="5"
+          [totalRecords]="cantidad"
+          styleClass="p-datatable-gridlines"
+        >
+          <ng-template pTemplate="caption">
+            Trabajadores
+          </ng-template>
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th id="cabecera" *ngFor="let col of columns">
+                {{col.header}}
               </th>
-              <td mat-cell *matCellDef="let rowData">
-                {{rowData.nombres}}
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="Apellidos">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                Apellidos
-              </th>
-              <td mat-cell *matCellDef="let rowData">
-                {{rowData.apellidos}}
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="Cedula">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                Cedula
-              </th>
-              <td mat-cell *matCellDef="let rowData">
-                {{rowData.cedula}}
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="Estado">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                Estado
-              </th>
-              <td mat-cell *matCellDef="let rowData">
-                <button
-                  class="btn btn-sm btn-block"
-                  [ngClass]="{
-                'btn-success': rowData.estado,
-                'btn-danger': !rowData.estado
-                }"
-                  (click)="actualizarEstado(rowData)"
-                >
-                  {{rowData.estado ? 'Activo' : 'Inactivo'}}
-                </button>
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="Acciones">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                Acciones
-              </th>
-              <td mat-cell *matCellDef="let rowData">
-                <button
-                  class="btn btn-sm btn-block btn-info">
-                  EDITAR
-                </button>
-              </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="columnas"></tr>
-            <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
-
-            <tr class="mat-row" *matNoDataRow>
-              <!--      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>-->
             </tr>
-          </table>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+              <td *ngFor="let col of columns">
+                <span class="p-column-title">
+                  {{col.header}}
+                </span>
+                <div *ngIf="col.header === 'Nombres'">
+                  {{rowData[col.field]}}
+                </div>
+                <div *ngIf="col.header === 'Apellidos'">
+                  {{rowData[col.field]}}
+                </div>
+                <div *ngIf="col.header === 'Cedula'">
+                  {{rowData[col.field]}}
+                </div>
+                <div *ngIf="col.header === 'Estado'">
+                  <button class="btn btn-sm btn-block"
+                          [ngClass]="{
+                          'btn-success': rowData.estado,
+                          'btn-danger': !rowData.estado
+                          }"
+                          (click)="actualizarEstado(rowData)"
+                  >
+                    {{rowData.estado ? 'Activo' : 'Inactivo'}}
+                  </button>
+                </div>
+                <div *ngIf="col.header === 'Acciones'">
+                  <button class="btn btn-sm btn-block btn-info"
+                  (click)="abrirModalEditar(rowData)"
+                  >
+                    EDITAR
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage" let-columns>
+            <tr>
+              <td [attr.colspan]="columns.length">
+                No existe registros
+              </td>
+            </tr>
+          </ng-template>
 
-          <mat-paginator [pageSizeOptions]="[1, 5, 10]"></mat-paginator>
-        </div>
+        </p-table>
       </div>
     </div>
   </div>

@@ -46,6 +46,13 @@ export class UsuarioEntity extends EntityGenericaEntity {
   })
   estado: 1 | 0 = 1;
 
+  @Column({
+    type: 'tinyint',
+    name: 'es_trabajador',
+    default: 1,
+  })
+  esTrabajador: 1 | 0 = 1;
+
   @OneToMany(
     type => RolUsuarioEntity,
     rolUsuario => rolUsuario.usuario,

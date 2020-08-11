@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-titulo-pantalla',
@@ -16,10 +16,14 @@ export class TituloPantallaComponent implements OnInit {
   @Input()
   ejemplo: string;
 
+  @Input()
+  imagen: string;
+
   constructor() {
   }
 
   ngOnInit(): void {
   }
+
 
 }

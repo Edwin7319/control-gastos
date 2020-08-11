@@ -41,17 +41,16 @@ export class ServicioPrincipalRestService<Entity> {
     }
   }
 
-  async listarTodos(): Promise<[Entity[], number] | string> {
-
+  async listarTodos(consulta?): Promise<[Entity[], number] | string> {
+    const JsonConsulta = consulta ? JSON.parse(consulta) : undefined;
     try {
-      const repositorio$ = await this._repositoryEntity;
-      return repositorio$
-        .createQueryBuilder()
-        .orderBy('id', 'DESC')
-        // .skip(skip)
-        // .take(take)
-        .getManyAndCount();
+      return await this._repositoryEntity.findAndCount(JsonConsulta);
     } catch (e) {
+      console.error({
+        mensaje: 'Error al recuperar todos',
+        error: e,
+        data: consulta,
+      });
       throw new InternalServerErrorException('Error con base servidor');
     }
   }

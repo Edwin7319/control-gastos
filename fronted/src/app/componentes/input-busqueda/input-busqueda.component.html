@@ -1,0 +1,27 @@
+<form class="form-inline" novalidate>
+  <div class="col-sm-12">
+    <div class="input-group mb-3">
+      <input type="text"
+             class="form-control"
+             placeholder="Ingrese su busqueda..."
+             aria-describedby="busqueda"
+             #busqueda
+      >
+      <div class="input-group-append">
+        <button class="btn btn-sm btn-block btn-outline-secondary"
+                id="busqueda"
+                (click)="busquedaIngresada(busqueda.value)"
+        >
+          <i class="pi pi-search"></i>
+          BUSCAR
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12">
+    <small id="busquedaHelp"
+           class="form-text text-muted ayuda-span">
+      {{ayuda}}
+    </small>
+  </div>
+</form>

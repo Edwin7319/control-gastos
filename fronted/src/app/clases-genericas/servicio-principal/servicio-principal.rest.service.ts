@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class ServicioPrincipalRestService<Interfaz> {
     this._httpClient = _httpClient;
   }
 
-  findAll(): Observable<[Interfaz[], number]> {
+  findAll(consulta?): Observable<[Interfaz[], number]> {
     // const headers = new HttpHeaders(
     //   {
     //     'Content-Type': 'application/json',
@@ -24,8 +24,8 @@ export class ServicioPrincipalRestService<Interfaz> {
     //   }
     // );
     // const options = {headers};
-    // @ts-ignore
-    return this._httpClient.get(`${this.url}:${this.puerto}/${this.segmento}`);
+    const nuevaUrl = consulta ? `${this.url}:${this.puerto}/${this.segmento}?${consulta}` : `${this.url}:${this.puerto}/${this.segmento}`;
+    return this._httpClient.get(nuevaUrl);
   }
 
   updateOne(id: number, datos: Interfaz): Observable<Interfaz> {
@@ -36,11 +36,10 @@ export class ServicioPrincipalRestService<Interfaz> {
     //   }
     // );
     // const options = {headers};
-    // @ts-ignore
     return this._httpClient.put(`${this.url}:${this.puerto}/${this.segmento}/${id}`, datos);
   }
 
-  create(datos: Interfaz): Observable<any> {
+  create(datos: Interfaz): Observable<Interfaz> {
     // const headers = new HttpHeaders(
     //   {
     //     'Content-Type': 'application/json',
@@ -63,7 +62,7 @@ export class ServicioPrincipalRestService<Interfaz> {
     return this._httpClient.get(`${this.url}:${this.puerto}/${this.segmento}/${id}`);
   }
 
-  delete(id: number): Observable<any> {
+  delete(id: number): Observable<Interfaz> {
     // const headers = new HttpHeaders(
     //   {
     //     'Content-Type': 'application/json',
