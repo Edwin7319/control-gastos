@@ -8,22 +8,24 @@ import {ButtonModule, TableModule} from 'primeng';
 import {InputBusquedaModule} from '../../componentes/input-busqueda/input-busqueda.module';
 import {MatDialogModule} from '@angular/material/dialog';
 import {CrearEditarUsuarioModule} from './modales/crear-editar-usuario/crear-editar-usuario.module';
+import {SelectEstadoModule} from '../../componentes/select-estado/select-estado.module';
 
 
 @NgModule({
   declarations: [
     RutaGestionUsuarioComponent
   ],
-  imports: [
-    CommonModule,
-    UsuarioRoutingModule,
-    TituloPantallaModule,
-    TableModule,
-    ButtonModule,
-    InputBusquedaModule,
-    MatDialogModule,
-    CrearEditarUsuarioModule
-  ]
+    imports: [
+        CommonModule,
+        UsuarioRoutingModule,
+        TituloPantallaModule,
+        TableModule,
+        ButtonModule,
+        InputBusquedaModule,
+        MatDialogModule,
+        CrearEditarUsuarioModule,
+        SelectEstadoModule
+    ]
 })
 export class UsuarioModule {
 }

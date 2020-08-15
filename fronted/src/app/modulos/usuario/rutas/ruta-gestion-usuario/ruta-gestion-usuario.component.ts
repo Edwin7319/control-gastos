@@ -42,8 +42,7 @@ export class RutaGestionUsuarioComponent implements OnInit {
 
   consultaIncial = {
     relations: ['gastos', 'sueldos'],
-    where: {
-    },
+    where: {},
     skip: 0,
     take: 5,
     order: {
@@ -100,8 +99,7 @@ export class RutaGestionUsuarioComponent implements OnInit {
     this._loadingService.habilitarLoading();
     const busquedaIngresada = busqueda.trim();
     if (busquedaIngresada === '') {
-      this.consultaIncial.where = {
-      };
+      this.consultaIncial.where = {};
       this.consultaIncial.skip = 0;
       this.consultaIncial.take = 5;
       this.cargarDatos(this.consultaIncial);
@@ -192,5 +190,17 @@ export class RutaGestionUsuarioComponent implements OnInit {
           }
         }
       );
+  }
+
+  buscarEstadoSeleccionado(estado) {
+    this._loadingService.habilitarLoading();
+    const estadoABuscar = estado !== null ? estado : undefined;
+    this.consultaIncial.where = {
+      estado: estadoABuscar
+    };
+    this.consultaIncial.skip = 0;
+    this.consultaIncial.take = 5;
+    this.cargarDatos(this.consultaIncial);
+    this._loadingService.deshabilitarLoading();
   }
 }

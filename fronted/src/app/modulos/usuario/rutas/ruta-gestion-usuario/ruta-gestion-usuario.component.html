@@ -8,19 +8,29 @@
 
   <div class="row espacio-top-4">
     <div class="col-lg-7">
-      <app-input-busqueda
-        (busqueda)="escucharBusquedaIngresada($event)"
-        [ayuda]="'Realice su busqueda por nombres, apellidos o cedula'"
-      ></app-input-busqueda>
+      <div class="col-md-12">
+        <app-input-busqueda
+          (busqueda)="escucharBusquedaIngresada($event)"
+          [ayuda]="'Realice su busqueda por nombres, apellidos o cedula'"
+        ></app-input-busqueda>
+      </div>
     </div>
 
-    <div class="col-lg-3"></div>
+    <div class="col-lg-3">
+      <div class="col-md-12">
+        <app-select-estado
+        (estadoSeleccionado)="buscarEstadoSeleccionado($event)"
+        ></app-select-estado>
+      </div>
+    </div>
     <div class="col-lg-2">
-      <button class="btn btn-sm btn-block btn-info"
-              (click)="abrirModalCrear()"
-      >
-        NUEVO
-      </button>
+      <div class="col-md-12">
+        <button class="btn btn-sm btn-block btn-info"
+                (click)="abrirModalCrear()"
+        >
+          NUEVO
+        </button>
+      </div>
     </div>
 
   </div>
