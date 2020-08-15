@@ -41,8 +41,9 @@ export class RutaGestionUsuarioComponent implements OnInit {
   ];
 
   consultaIncial = {
-    relations: [],
-    where: {},
+    relations: ['gastos', 'sueldos'],
+    where: {
+    },
     skip: 0,
     take: 5,
     order: {
@@ -99,13 +100,21 @@ export class RutaGestionUsuarioComponent implements OnInit {
     this._loadingService.habilitarLoading();
     const busquedaIngresada = busqueda.trim();
     if (busquedaIngresada === '') {
-      this.consultaIncial.where = {};
+      this.consultaIncial.where = {
+      };
+      this.consultaIncial.skip = 0;
+      this.consultaIncial.take = 5;
       this.cargarDatos(this.consultaIncial);
       this._loadingService.deshabilitarLoading();
     } else {
       this.consultaIncial.where = {
-        nombres: busqueda
+        nombres: `Like("%25${busqueda}%25")`,
+        apellidos: `Like("%25${busqueda}%25")`,
+        cedula: `Like("%25${busqueda}%25")`,
+        edwOr: true
       };
+      this.consultaIncial.skip = 0;
+      this.consultaIncial.take = 5;
       this.cargarDatos(this.consultaIncial);
       this._loadingService.deshabilitarLoading();
     }

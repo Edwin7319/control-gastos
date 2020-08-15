@@ -72,5 +72,4 @@ export class ServicioPrincipalRestService<Interfaz> {
     // const options = {headers};
     return this._httpClient.delete(`${this.url}:${this.puerto}/${this.segmento}/${id}`);
   }
-
 }

@@ -103,5 +103,4 @@ export class ControladorPrincipalController<Entity> {
       throw new InternalServerErrorException({ mensaje: 'Error servidor', tipo: 500 });
     }
   }
-
 }
