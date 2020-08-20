@@ -43,43 +43,43 @@ export class ServicioPrincipalRestService<Entity> {
 
   async listarTodos(consulta?): Promise<[Entity[], number] | string> {
     const JsonConsulta = consulta ? JSON.parse(consulta) : undefined;
-    JsonConsulta.where.edwOr  = JsonConsulta.where.edwOr ? JsonConsulta.where.edwOr : false;
+    JsonConsulta.where.edwOr = JsonConsulta.where.edwOr ? JsonConsulta.where.edwOr : false;
     Object.values(JsonConsulta.where)
-    .forEach(
-      (valor) => {
-        if(typeof valor === 'string') {
-         if(valor.includes('Like')) {
-          const separador1 = valor.indexOf('%');
-          const separador2 = valor.lastIndexOf('%');
-          const stringABuscar = valor.substring(separador1, separador2 + 1)     
-          for(const key in JsonConsulta.where) {
-            if(JsonConsulta.where[key] === valor) {
-             JsonConsulta.where[key] = Like(stringABuscar)
-            }
-          }    
-         }
-        }
-      }
-    )
-    if(JsonConsulta.where.edwOr) {
-      const arregloWhereOr = []
-      delete JsonConsulta.where.edwOr
-      Object.values(JsonConsulta.where)
       .forEach(
         (valor) => {
-          for(const key in JsonConsulta.where) {
-            if(JsonConsulta.where[key] === valor) {
-              arregloWhereOr.push({
-                [key]: valor
+          if (typeof valor === 'string') {
+            if (valor.includes('Like')) {
+              const separador1 = valor.indexOf('%');
+              const separador2 = valor.lastIndexOf('%');
+              const stringABuscar = valor.substring(separador1, separador2 + 1);
+              for (const key in JsonConsulta.where) {
+                if (JsonConsulta.where[key] === valor) {
+                  JsonConsulta.where[key] = Like(stringABuscar);
+                }
               }
-              )
-             }
+            }
           }
-        }
+        },
       );
-      JsonConsulta.where = arregloWhereOr
+    if (JsonConsulta.where.edwOr) {
+      const arregloWhereOr = [];
+      delete JsonConsulta.where.edwOr;
+      Object.values(JsonConsulta.where)
+        .forEach(
+          (valor) => {
+            for (const key in JsonConsulta.where) {
+              if (JsonConsulta.where[key] === valor) {
+                arregloWhereOr.push({
+                    [key]: valor,
+                  },
+                );
+              }
+            }
+          },
+        );
+      JsonConsulta.where = arregloWhereOr;
     }
-    delete JsonConsulta.where.edwOr
+    delete JsonConsulta.where.edwOr;
     try {
       return await this._repositoryEntity.findAndCount(JsonConsulta);
     } catch (e) {

@@ -1,6 +1,8 @@
 <div class="container">
   <div class="row justify-content-md-center">
-    {{data.usuario ? 'EDITAR' : 'CREAR'}} USUARIO
+    <h1 class="titulo">
+      {{data.usuario ? 'EDITAR' : 'CREAR'}} USUARIO
+    </h1>
   </div>
 </div>
 
@@ -11,20 +13,21 @@
   ></app-formulario-trabajador>
 </div>
 
-<div class="row justify-content-lg-end" mat-dialog-actions>
-  <div style="padding-right: 1rem">
+<div
+  class="row justify-content-lg-end"
+  mat-dialog-actions
+>
+  <div class="col-sm-3">
     <button
-      class="btn btn-outline-dark"
+      class="btn btn-sm btn-block btn-outline-dark"
       (click)="cancelarModal()">
-      <i class="pi pi-times"></i>
       CANCELAR
     </button>
   </div>
-  <div>
-    <button class="btn btn-success"
+  <div class="col-sm-3">
+    <button class="btn btn-sm btn-block btn-success"
             [disabled]="!usuarioCrearEditar"
             (click)="enviarDatosModal()">
-      <i class="pi pi-save"></i>
       CREAR
     </button>
   </div>

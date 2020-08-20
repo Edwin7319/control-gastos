@@ -1,7 +1,14 @@
-<p-dropdown
-  [options]="estados"
-  (onChange)="esucharSelect($event)"
-  placeholder="Seleccionar estado"
-  optionLabel="label"
-  [showClear]="true"
-></p-dropdown>
+<div>
+  <p-dropdown
+    [options]="estados"
+    (onChange)="esucharSelect($event)"
+    placeholder="Estado"
+    optionLabel="label"
+    [showClear]="true"
+    [style]="{'width': '75%', 'height': '2.5rem'}"
+  ></p-dropdown>
+  <small id="busquedaHelp"
+         class="form-text text-muted ayuda-span">
+    Seleccione un estado
+  </small>
+</div>

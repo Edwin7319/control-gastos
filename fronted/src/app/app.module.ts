@@ -15,6 +15,8 @@ import {RutaNoEncontradaComponent} from './componentes/ruta-no-encontrada/ruta-n
 import {UsuarioRestService} from './modulos/usuario/servicios/usuario.rest.service';
 import {LoadingService} from './servicios/loadin.service';
 import {BlockUIModule} from 'primeng';
+import {SimpleNotificationsModule} from 'angular2-notifications';
+import {BarraLateralModule} from './componentes/barra-lateral/barra-lateral.module';
 
 registerLocaleData(en);
 
@@ -35,6 +37,8 @@ registerLocaleData(en);
     NzButtonModule,
     NzIconModule,
     BlockUIModule,
+    SimpleNotificationsModule.forRoot(),
+    BarraLateralModule,
   ],
   providers: [
     UsuarioRestService,

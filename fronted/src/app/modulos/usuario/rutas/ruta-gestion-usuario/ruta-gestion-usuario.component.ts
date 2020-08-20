@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {UsuarioRestService} from '../../servicios/usuario.rest.service';
-import {Toast, ToasterService} from 'angular2-toaster';
 import {UsuarioInterface} from '../../interfaces/usuario.interface';
 import {LoadingService} from '../../../../servicios/loadin.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {CrearEditarUsuarioComponent} from '../../modales/crear-editar-usuario/crear-editar-usuario.component';
+import {NotificationsService} from 'angular2-notifications';
+import {TOAST_NOTIFICATION} from '../../../../constantes/configuracion-notification';
 
 @Component({
   selector: 'app-ruta-gestion-usuario',
@@ -52,7 +53,7 @@ export class RutaGestionUsuarioComponent implements OnInit {
 
   constructor(
     private readonly _usuarioRestService: UsuarioRestService,
-    private readonly _toasterService: ToasterService,
+    private readonly _notificationService: NotificationsService,
     private readonly _loadingService: LoadingService,
     private readonly _router: Router,
     private readonly _dialog: MatDialog,
@@ -73,15 +74,12 @@ export class RutaGestionUsuarioComponent implements OnInit {
           this.cantidad = usuarios[1];
         },
         error => {
-          const toast: Toast = {
-            type: 'error',
-            title: 'Error',
-            showCloseButton: true,
-            body: 'Error cargando datos de inicio',
-            timeout: 1000
-          };
-          this._toasterService
-            .pop(toast);
+          this._notificationService
+            .error(
+              'Error',
+              'Error cargando datos',
+              TOAST_NOTIFICATION
+            );
           console.error({
             mensaje: 'Error cargando usuarios',
             error
@@ -132,14 +130,12 @@ export class RutaGestionUsuarioComponent implements OnInit {
     usuario$
       .subscribe(
         (usuario) => {
-          const toast: Toast = {
-            type: 'success',
-            title: 'Exito',
-            showCloseButton: true,
-            body: 'Estado actualizado de manera correcta',
-            timeout: 1000
-          };
-          this._toasterService.pop(toast);
+          this._notificationService
+            .success(
+              'Exito',
+              'Estado actualizado de manera correcta',
+              TOAST_NOTIFICATION
+            );
           registro.estado = nuevoEstado;
           this._loadingService.deshabilitarLoading();
         },
@@ -166,6 +162,12 @@ export class RutaGestionUsuarioComponent implements OnInit {
         (respuesta) => {
           if (respuesta) {
             this.data.unshift(respuesta);
+            this._notificationService
+              .success(
+                'Exito',
+                'Trabajador creado de manera correcta',
+                TOAST_NOTIFICATION
+              );
           }
         }
       );
@@ -187,6 +189,12 @@ export class RutaGestionUsuarioComponent implements OnInit {
         (respuesta) => {
           if (respuesta) {
             this.data[indice] = respuesta;
+            this._notificationService
+              .success(
+                'Exito',
+                'Trabajador actualizado de manera correcta',
+                TOAST_NOTIFICATION
+              );
           }
         }
       );
@@ -201,6 +209,7 @@ export class RutaGestionUsuarioComponent implements OnInit {
     this.consultaIncial.skip = 0;
     this.consultaIncial.take = 5;
     this.cargarDatos(this.consultaIncial);
+    this._router.navigate(this.ruta, {queryParams: {busqueda: JSON.stringify(this.consultaIncial)}});
     this._loadingService.deshabilitarLoading();
   }
 }

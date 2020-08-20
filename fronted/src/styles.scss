@@ -29,9 +29,31 @@ body {
 
 }
 
+#btn-nuevo {
+  font-size: 18px;
+}
+
+#btn-nuevo:hover {
+  font-size: 18px;
+  background-color: #ffffff;
+  color: #30699e;
+  border: 1px solid #0a0a0a
+}
+
+#cabecera {
+  text-align: center;
+  color: #101010;
+  font-weight: bold;
+  background: #eeeeee;
+}
+
+label {
+  font-size: 18px;
+}
+
 .btn-info {
   background-color: #30699e;
-  border: #000000;
+  border: 1px solid #ffffff
 }
 
 .btn-success {

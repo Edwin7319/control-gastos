@@ -4,7 +4,8 @@ import {UsuarioInterface} from '../../interfaces/usuario.interface';
 import {debounceTime} from 'rxjs/operators';
 import {escucharErroresEnCampoFormulario} from '../../../../funciones/esuchar-errores-en-campo';
 import {MENSAJES_DE_ERROR_APELLIDO, MENSAJES_DE_ERROR_CEDULA, MENSAJES_DE_ERROR_NOMBRE} from './mensajes-error-formulario';
-import {Toast, ToasterService} from 'angular2-toaster';
+import {NotificationsService} from 'angular2-notifications';
+import {TOAST_NOTIFICATION} from '../../../../constantes/configuracion-notification';
 
 @Component({
   selector: 'app-formulario-trabajador',
@@ -26,7 +27,7 @@ export class FormularioTrabajadorComponent implements OnInit {
   arregloMensajesDeErrorCedula: string[] = [];
 
   constructor(
-    private readonly _toasterService: ToasterService
+    private readonly _notificationService: NotificationsService
   ) {
     this._generarFormularioUsuario();
   }
@@ -74,26 +75,20 @@ export class FormularioTrabajadorComponent implements OnInit {
         (valoresFormulario) => {
           const formularioCorrecto = this.formularioUsuario.valid;
           if (formularioCorrecto) {
-            const toast: Toast = {
-              type: 'info',
-              timeout: 1000,
-              showCloseButton: true,
-              title: 'Correcto',
-              body: 'Formulario usuario valido.'
-            };
-            this._toasterService
-              .pop(toast);
+            this._notificationService
+              .info(
+                'Correcto',
+                'Formulario usuario validao',
+                TOAST_NOTIFICATION
+              );
             this.datosUsuario.emit(valoresFormulario);
           } else {
-            const toast: Toast = {
-              type: 'warning',
-              timeout: 1000,
-              showCloseButton: true,
-              title: 'Cuidado',
-              body: 'Formulario usuario tiene errores.'
-            };
-            this._toasterService
-              .pop(toast);
+            this._notificationService
+              .warn(
+                'Cuidado',
+                'Formulario usuario tiene errores',
+                TOAST_NOTIFICATION
+              );
             this.datosUsuario.emit(false);
           }
         }

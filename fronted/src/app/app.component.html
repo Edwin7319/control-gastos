@@ -15,6 +15,18 @@
   </div>
 </p-blockUI>
 <div>
-  <router-outlet></router-outlet>
-  <toaster-container></toaster-container>
+  <div class="d-flex flex-row">
+    <div class="p-2">
+      <app-barra-lateral></app-barra-lateral>
+    </div>
+    <div class="p-2"></div>
+    <div class="p-2">
+      <div style="margin-left: 315px">
+        <router-outlet></router-outlet>
+        <simple-notifications
+          [options]="configuracionesNotification"
+        ></simple-notifications>
+      </div>
+    </div>
+  </div>
 </div>

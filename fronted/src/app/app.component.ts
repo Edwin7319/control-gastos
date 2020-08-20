@@ -9,6 +9,10 @@ import {LoadingService} from './servicios/loadin.service';
 export class AppComponent implements OnInit {
   title = 'Gastos';
   ocultar = false;
+  configuracionesNotification = {
+    position: ['top', 'right'],
+    animate: 'scale'
+  };
 
   constructor(
     private readonly _loadingService: LoadingService
